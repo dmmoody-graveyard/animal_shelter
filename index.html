@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link href="lib/angular.js">
+  <title>Animal Shelter</title>
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Animal Shelter</h1>
+    </div>
+    <div class="col-sm-6" id="new-animal">
+      <h3>Add a New Animal</h3>
+      <form class="form-group">
+        <input type="text" class="form-control" placeholder="Add a new animal">
+        <select name="animal" id="animal" class='form-control'>
+          <option value=""></option>
+          <option value="dog">Dog</option>
+          <option value="cat">Cat</option>
+          <option value="rabbit">Rabbit</option>
+        </select>
+        <submit class="btn btn-default" ng-click="">Add</submit>
+      </form>
+    </div>
+
+    <div class="col-md-12" id="dogs">
+      <h4>Adoptable Dogs</h4>
+      <ul class="list-unstyled">
+        <li>dog</li>
+      </ul>
+    </div>
+
+    <div class="col-md-12" id="cats">
+      <h4>Adoptable Cats</h4>
+      <ul class="list-unstyled">
+        <li>cat</li>
+      </ul>
+    </div>
+
+    <div class="col-md-12" id="rabbits">
+      <h4>Adoptable Rabbits</h4>
+      <ul class="list-unstyled">
+        <li>rabbit</li>
+      </ul>
+    </div>
+
+    <div class="col-md-12" id="adopted">
+      <h4>Adopted Pets</h4>
+      <ul class="list-unstyled">
+        <li>We were adopted!</li>
+      </ul>
+    </div>
+
+  </div>
+</body>
+</html>
