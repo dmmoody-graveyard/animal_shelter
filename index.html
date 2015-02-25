@@ -1,56 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="animalList">
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="css/bootstrap.css">
-  <link href="lib/angular.js">
+  <script src="lib/angular.js"></script>
+  <script src="app.js"></script>
+  <script src="services/AnimalsFactory.js"></script>
+  <script src="controllers/AnimalController.js"></script>
+  <script src="controllers/AdoptedController.js"></script>
   <title>Animal Shelter</title>
 </head>
 <body>
   <div class="container">
+
     <div class="page-header">
       <h1>Animal Shelter</h1>
     </div>
-    <div class="col-sm-6" id="new-animal">
-      <h3>Add a New Animal</h3>
-      <form class="form-group">
-        <input type="text" class="form-control" placeholder="Add a new animal">
-        <select name="animal" id="animal" class='form-control'>
-          <option value=""></option>
-          <option value="dog">Dog</option>
-          <option value="cat">Cat</option>
-          <option value="rabbit">Rabbit</option>
-        </select>
-        <submit class="btn btn-default" ng-click="">Add</submit>
-      </form>
+
+    <div ng-controller="AnimalsCtrl">
+      <div class="col-sm-12" id="new-animal">
+        <h3>Add a New Animal</h3>
+        <form ng-submit="AnimalsFactory.addAnimal()" class="form-inline" role="form">
+          <div class="form-group">
+            <input type="text" ng-model="AnimalsFactory.animalName" class="form-control" placeholder="Animal Name" required>
+            <select name="animal" ng-model="AnimalsFactory.animalType" class="form-control" id="animal" required>
+              <option disabled hidden value=''></option>
+              <option selected value="dog">Dog</option>
+              <option value="cat">Cat</option>
+              <option value="rabbit">Rabbit</option>
+            </select>
+            <button type="submit" class="btn btn-default">Add</button>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <div class="col-md-12" id="dogs">
-      <h4>Adoptable Dogs</h4>
-      <ul class="list-unstyled">
-        <li>dog</li>
-      </ul>
-    </div>
+    <hr>
 
-    <div class="col-md-12" id="cats">
-      <h4>Adoptable Cats</h4>
-      <ul class="list-unstyled">
-        <li>cat</li>
-      </ul>
-    </div>
+    <div class="row" ng-controller="AdoptedCtrl">
+      <div ng-show="animals.length">
+        <div class="col-sm-3" id="dogs" ng-show="dogs.length">
+          <h4>Adoptable Dogs</h4>
+          <ul class="list-unstyled">
+            <div>
+              <li ng-repeat="animal in dogs = (animals | filter: {type: 'dog', adopted: false})">
+                {{animal.name}} <button class="btn btn-default btn-xs" ng-click="addAnimalToAdoptedList(animal)">Adopted</button>
+              </li>
+            </div>
+          </ul>
+        </div>
 
-    <div class="col-md-12" id="rabbits">
-      <h4>Adoptable Rabbits</h4>
-      <ul class="list-unstyled">
-        <li>rabbit</li>
-      </ul>
-    </div>
+        <div class="col-sm-3" id="cats" ng-show="cats.length">
+          <h4>Adoptable Cats</h4>
+          <ul class="list-unstyled">
+            <li ng-repeat="animal in cats = (animals | filter: {type: 'cat', adopted: false})">
+              {{animal.name}} <button class="btn btn-default btn-xs" ng-click="addAnimalToAdoptedList(animal)">Adopted</button>
+            </li>
+          </ul>
+        </div>
 
-    <div class="col-md-12" id="adopted">
-      <h4>Adopted Pets</h4>
-      <ul class="list-unstyled">
-        <li>We were adopted!</li>
-      </ul>
+        <div class="col-sm-3" id="rabbits" ng-show="rabbits.length">
+          <h4>Adoptable Rabbits</h4>
+          <ul class="list-unstyled">
+            <li ng-repeat="animal in rabbits = (animals | filter: {type: 'rabbit', adopted: false})">
+              {{animal.name}} <button class="btn btn-default btn-xs" ng-click="addAnimalToAdoptedList(animal)">Adopted</button>
+            </li>
+          </ul>
+        </div>
+
+        <div ng-show="animalsAdopted.length">
+          <div class="col-sm-12">
+            <h4>Adopted Pets</h4>
+            <ul class="list-unstyled">
+              <li ng-repeat="animal in animalsAdopted = (animals | filter: {adopted: true})">
+                {{animal.name}} - {{animal.type}}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </div>
